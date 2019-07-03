@@ -1,0 +1,2 @@
+# sample_nmt
+简单实现了seqtoseq和attention的机器翻译
