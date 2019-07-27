@@ -1,5 +1,8 @@
 # seq2seq
-基于pytorch实现seq2seq和attention模型的机器翻译，
+基于pytorch实现seq2seq和attention模型的机器翻译
+中英文语料：
+链接：https://pan.baidu.com/s/1uQbEmfGn4BBoRTf1QCc_Bg 
+提取码：m6fg 
 
 ## 安装要求
 * pytorch 1.1.0
