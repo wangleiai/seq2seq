@@ -12,6 +12,7 @@
 ## 使用说明
     如果使用自己的数据集的时候，需要把param.py中的TEST=False，数据文件的格式:
     data/train.cn data/train.en data/val.cn data/val.en data/test.cn data/test.en 
+    attenion的可以看attention结构图中的描述
 
 ### train
     修改param.py中的参数,运行train.py，
