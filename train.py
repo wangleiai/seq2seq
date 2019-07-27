@@ -37,7 +37,7 @@ def cal_loss(pred, gold, smoothing, pad_index):
     else:
 
         loss = F.cross_entropy(pred, gold, ignore_index=pad_index)
-        loss = loss/n_word
+        loss = loss
     return loss
 
 s_writer = SummaryWriter()
@@ -118,7 +118,8 @@ def main(epoches=10):
         enc = atten_model.Encoder(len(SRC.vocab), params.ENC_EMB_DIM, params.HID_DIM, params.N_LAYERS, params.ENC_DROPOUT, bid=params.BID)
         dec = atten_model.Decoder(len(TRG.vocab), params.DEC_EMB_DIM, params.HID_DIM, params.HID_DIM, params.N_LAYERS, attn, bid=params.BID)
         model = atten_model.Seq2Seq(enc, dec, params.DEVICE).to(params.DEVICE)
-
+    elif params.MODEL_TYPE == 2:
+        pass
     else:
         print("params.MODEL_TYPE error")
         exit(1)
@@ -145,7 +146,14 @@ def main(epoches=10):
     print("pad token：{}".format(PAD_IDX))
 
     optimizer = optim.Adam(model.parameters(), lr=params.LR)
-    
+    if params.COSINEANNEALINGLR:
+        optimizer = lr_scheduler.CosineAnnealingLr(optimizer, params.T_MAX, params.ETA_MIN)
+    # #
+    # if params.LABEL_SMOOTH:
+    #     # criterion = labelSmooth.LabelSmoothingLoss(params.LABEL_SMOOTHING, len(TRG.vocab), ignore_index=PAD_IDX)
+    #     criterion = labelSmooth.LabelSmoothing(len(TRG.vocab), padding_idx=PAD_IDX, smoothing=params.LABEL_SMOOTHING)
+    # else:
+    #     criterion = nn.CrossEntropyLoss(ignore_index=PAD_IDX)
     best_model = None
     for epoch in range(1, epoches + 1):
         train_loss = train(model, train_iterator, params.LABEL_SMOOTH, optimizer, PAD_IDX, clip=1)
@@ -162,9 +170,7 @@ def main(epoches=10):
             torch.save({'model': model.state_dict(),
                         'SRC': SRC,
                         'TRG': TRG}, params.MODEL_PATH)
-        torch.save({'model': model.state_dict(),
-                    'SRC': SRC,
-                    'TRG': TRG}, "models/1.pt")
+
 
 if __name__ == '__main__':
     main(19)
