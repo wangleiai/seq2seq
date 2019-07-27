@@ -1,2 +1,2 @@
 # sample_nmt
-使用paytorch简单实现了seqtoseq和attention的机器翻译，熟悉了基于深度学习的机器翻译的整个流程。
+使用pytorch简单实现了seqtoseq和attention的机器翻译，熟悉了基于深度学习的机器翻译的整个流程。
