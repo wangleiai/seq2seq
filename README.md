@@ -54,6 +54,7 @@
 ### 缺点
     1. 没有设置学习率调整策略
     2. teacher_forcing_ratio需要手动调整
+    ......
     
 ## 参考
 * https://github.com/bentrevett/pytorch-seq2seq
